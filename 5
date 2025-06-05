@@ -1,0 +1,20 @@
+import numpy as np
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score
+
+# Data preparation
+X = np.random.rand(100)
+y = ['class1' if v <= 0.5 else 'class2' for v in X[:50]] + [None]*50
+
+# Train and test data
+X_train = X[:50].reshape(-1, 1)
+y_train = y[:50]
+X_test = X[50:].reshape(-1, 1)
+y_true = ['class1' if v <= 0.5 else 'class2' for v in X[50:]]
+
+# KNN model and accuracy
+for k in [1, 3,4, 5 ,20,30]:
+    model = KNeighborsClassifier(n_neighbors=k).fit(X_train, y_train)
+    y_pred = model.predict(X_test)
+    acc = accuracy_score(y_true, y_pred) * 100
+    print(f"k={k} Accuracy: {acc:.2f}%")
