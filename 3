@@ -1,0 +1,13 @@
+from sklearn.datasets import load_iris
+from sklearn.decomposition import PCA
+import matplotlib.pyplot as plt
+d=load_iris()
+p=PCA(2).fit_transform(d.data)
+plt.figure(figsize=(10,8))
+plt.scatter(p[d.target==0,0],p[d.target==0,1],label='setosa')
+plt.scatter(p[d.target==1,0],p[d.target==1,1],label='versicolor')
+plt.scatter(p[d.target==2,0],p[d.target==2,1],label='viorgina')
+plt.legend()
+plt.grid(True)
+plt.title("pca")
+plt.show()
