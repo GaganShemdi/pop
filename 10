@@ -1,0 +1,32 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_breast_cancer
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+from sklearn.metrics import confusion_matrix, classification_report
+
+# Load and scale data
+data = load_breast_cancer()
+X = data.data
+y = data.target
+X = StandardScaler().fit_transform(X)
+
+# KMeans clustering
+kmeans = KMeans(2, random_state=42)
+y_pred = kmeans.fit_predict(X)
+
+# Evaluation
+print("Confusion Matrix:\n", confusion_matrix(y, y_pred))
+print("\nClassification Report:\n", classification_report(y, y_pred))
+
+# PCA for 2D plotting
+X_pca = PCA(2).fit_transform(X)
+
+# Plot
+plt.scatter(X_pca[:, 0], X_pca[:, 1], c=y_pred, cmap='Set1', s=50, alpha=0.6, edgecolor='k')
+plt.title("K-Means Clustering (PCA)")
+plt.xlabel("PC1")
+plt.ylabel("PC2")
+plt.show()
