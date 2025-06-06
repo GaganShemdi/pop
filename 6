@@ -1,0 +1,17 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+def lw_reg(x, X, y, tau):
+    w = np.exp(-((X - x)*2) / (2 * tau*2))
+    return np.sum(w * y) / np.sum(w)
+
+X = np.linspace(0, 2*np.pi, 100)
+y = np.sin(X) + 0.1 * np.random.randn(100)
+tau = 0.5
+
+x_test = np.linspace(0, 2*np.pi, 200)
+y_pred = [lw_reg(xi, X, y, tau) for xi in x_test]
+
+plt.scatter(X, y)
+plt.plot(x_test, y_pred)
+plt.show()
